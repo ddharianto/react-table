@@ -25,7 +25,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { visuallyHidden } from '@mui/utils';
 
-const MaterialTable = ({ columns, data, setOpen, setForm }) => {
+const MaterialTable = ({
+  columns,
+  data,
+  setData,
+  setOpen,
+  setForm,
+  setCars,
+  setIsEdit,
+}) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -48,6 +56,27 @@ const MaterialTable = ({ columns, data, setOpen, setForm }) => {
     useSortBy,
     usePagination
   );
+
+  const handleEdit = (row) => {
+    const { avatar, first_name, last_name, email, color, cars } = row.values;
+    const id = row.original.id;
+    setCars(row.values.cars);
+    setIsEdit(true);
+    setForm({
+      avatar,
+      first_name,
+      last_name,
+      email,
+      color,
+      cars,
+      id,
+    });
+    setOpen(true);
+  };
+
+  const handleDelete = (row) => {
+    console.log(row);
+  };
 
   return (
     <>
@@ -141,7 +170,7 @@ const MaterialTable = ({ columns, data, setOpen, setForm }) => {
                           <Button
                             variant="contained"
                             color="primary"
-                            onClick={() => setOpen(true)}
+                            onClick={() => handleEdit(row)}
                             startIcon={<BorderColorIcon />}
                             sx={{ mr: 1 }}
                           >
@@ -150,7 +179,7 @@ const MaterialTable = ({ columns, data, setOpen, setForm }) => {
                           <Button
                             variant="contained"
                             color="error"
-                            onClick={() => console.log(row.values.cars)}
+                            onClick={() => handleDelete(row)}
                             startIcon={<DeleteIcon />}
                           >
                             Delete
@@ -163,7 +192,7 @@ const MaterialTable = ({ columns, data, setOpen, setForm }) => {
                           <img src={row.values.avatar} alt="avatar" />
                         </TableCell>
                       );
-                    } else if (cell.column.Header === 'Desired Cars') {
+                    } else if (cell.column.Header === 'Desired Car(s)') {
                       const cars = row.values.cars;
                       return (
                         <TableCell {...cell.getCellProps()}>

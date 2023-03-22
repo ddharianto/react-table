@@ -1,37 +1,35 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { Fragment, useState, useEffect, useMemo } from 'react';
 import MaterialTable from './components/MaterialTable';
 import ModalForm from './components/ModalForm';
-import { Button, Typography } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+
+import { Button } from '@mui/material';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import DATA from './MOCK_DATA.json';
+import CARS from './CARS_MOCK_DATA.json';
 
 const App = () => {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState([
-    {
-      avatar: '',
-      first_name: '',
-      last_name: '',
-      email: '',
-      color: '',
-      cars: [],
-    },
-  ]);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [isEdit, setIsEdit] = useState(false);
+  const [cars, setCars] = useState([]);
+  const [form, setForm] = useState({
+    avatar: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    color: '',
+    cars: [''],
+    id: '',
+  });
 
   useEffect(() => {
     setData(DATA);
   }, []);
 
   const handleClick = (e) => {
+    setIsEdit(false);
+    setForm(0);
+    setCars(['']);
     setOpen(true);
   };
 
@@ -58,11 +56,12 @@ const App = () => {
         accessor: 'color',
       },
       {
-        Header: 'Desired Cars',
+        Header: 'Desired Car(s)',
         accessor: 'cars',
       },
       {
         Header: 'Actions',
+        accessor: 'actions',
       },
     ],
     []
@@ -73,18 +72,29 @@ const App = () => {
       <h1>React Table Example</h1>
       <Button
         variant="contained"
-        startIcon={<AddIcon />}
+        startIcon={<LibraryAddIcon />}
         sx={{ my: 1 }}
         onClick={handleClick}
       >
         Add New Data
       </Button>
-      <ModalForm open={open} setOpen={setOpen} />
+      <ModalForm
+        open={open}
+        setOpen={setOpen}
+        isEdit={isEdit}
+        setForm={setForm}
+        form={form}
+        cars={cars}
+      />
+
       <MaterialTable
         columns={columns}
         data={data}
+        setData={setData}
         setOpen={setOpen}
         setForm={setForm}
+        setCars={setCars}
+        setIsEdit={setIsEdit}
       />
     </div>
   );

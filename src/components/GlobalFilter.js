@@ -49,10 +49,13 @@ function GlobalFilter({
         >
           Result:{' '}
           <strong>{pages > 1 ? pageSize + '+ ' : rows.length + ' '}</strong>
-          data found
+          data found out of <strong>{count}</strong>
         </Alert>
       ) : (
-        ''
+        <Alert severity="info">
+          {' '}
+          Result: <strong>{count}</strong> data
+        </Alert>
       )}
     </div>
   );
