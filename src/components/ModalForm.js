@@ -12,23 +12,47 @@ import {
   FormLabel,
   FormControlLabel,
   Checkbox,
+  FormGroup,
 } from '@mui/material';
 import COLOR from '../COLOR_MOCK_DATA.json';
 import CARS from '../CARS_MOCK_DATA.json';
 
-const ModalForm = ({ open, setOpen, isEdit, setForm, form, cars }) => {
+const ModalForm = ({ open, setOpen, isEdit, setForm, form, cars, setCars }) => {
   let arr = [];
   CARS.map((el) => {
     return cars !== arr ? arr.push(cars.includes(el.name)) : false;
   });
-  console.log(arr);
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    if (e.target.checked) {
+      setForm({
+        ...form,
+        [e.target.name]:
+          e.target.name === 'cars'
+            ? [...form.cars, e.target.value]
+            : e.target.value,
+      });
+    } else {
+      const remove_car = form.cars.filter((el) => el !== e.target.value);
+      setForm({
+        ...form,
+        [e.target.name]:
+          e.target.name === 'cars' ? [...remove_car] : e.target.value,
+      });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (form.cars.length === 0) {
+      alert('Fill all the required input!');
+    }
+    console.log(form);
+  };
 
   return (
     <Modal
@@ -56,18 +80,8 @@ const ModalForm = ({ open, setOpen, isEdit, setForm, form, cars }) => {
           {isEdit ? `Editing ${form.first_name}'s Data` : 'Add New Data'}
         </h2>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            {!isEdit && (
-              <>
-                <Input
-                  name="avatar"
-                  label="avatar"
-                  handleChange={handleChange}
-                  value={form.avatar}
-                />
-              </>
-            )}
             <Input
               name="first_name"
               label="First Name"
@@ -75,7 +89,7 @@ const ModalForm = ({ open, setOpen, isEdit, setForm, form, cars }) => {
               value={form.first_name}
             />
             <Input
-              name="Last_name"
+              name="last_name"
               label="Last Name"
               handleChange={handleChange}
               value={form.last_name}
@@ -88,9 +102,10 @@ const ModalForm = ({ open, setOpen, isEdit, setForm, form, cars }) => {
               type="email"
             />
             <Grid item xs={12}>
-              <FormControl sx={{ width: 200 }}>
+              <FormControl required sx={{ width: 200 }}>
                 <InputLabel>Favourite Color</InputLabel>
                 <Select
+                  name="color"
                   defaultValue={isEdit ? form.color : 'Blue'}
                   label="Favourite Color"
                   onChange={handleChange}
@@ -106,22 +121,25 @@ const ModalForm = ({ open, setOpen, isEdit, setForm, form, cars }) => {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <Fragment>
-                <FormLabel>{`Desired Car(s): `}</FormLabel>
+              <FormLabel required>{`Desired Car(s): `}</FormLabel>
+              <FormGroup row={true}>
                 {CARS.map((el, index) => {
                   return (
                     <FormControlLabel
                       key={index}
                       control={
                         <Checkbox
-                          defaultChecked={isEdit ? arr[index] : false}
+                          name="cars"
+                          onChange={handleChange}
+                          defaultChecked={arr[index]}
+                          value={el.name}
                         />
                       }
                       label={el.name}
                     />
                   );
                 })}
-              </Fragment>
+              </FormGroup>
             </Grid>
           </Grid>
           <Button

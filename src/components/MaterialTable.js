@@ -60,7 +60,7 @@ const MaterialTable = ({
   const handleEdit = (row) => {
     const { avatar, first_name, last_name, email, color, cars } = row.values;
     const id = row.original.id;
-    setCars(row.values.cars);
+    setCars(cars);
     setIsEdit(true);
     setForm({
       avatar,

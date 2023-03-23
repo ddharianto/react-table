@@ -17,8 +17,8 @@ const App = () => {
     first_name: '',
     last_name: '',
     email: '',
-    color: '',
-    cars: [''],
+    color: 'Blue',
+    cars: [],
     id: '',
   });
 
@@ -28,7 +28,15 @@ const App = () => {
 
   const handleClick = (e) => {
     setIsEdit(false);
-    setForm(0);
+    setForm({
+      avatar: '',
+      first_name: '',
+      last_name: '',
+      email: '',
+      color: 'Blue',
+      cars: [],
+      id: '',
+    });
     setCars(['']);
     setOpen(true);
   };
@@ -85,6 +93,7 @@ const App = () => {
         setForm={setForm}
         form={form}
         cars={cars}
+        setCars={setCars}
       />
 
       <MaterialTable
