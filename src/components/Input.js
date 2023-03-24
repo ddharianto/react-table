@@ -9,6 +9,7 @@ const Input = ({ name, handleChange, label, value }) => (
       variant="outlined"
       required
       fullWidth
+      autoFocus
       label={label}
       value={value}
     />

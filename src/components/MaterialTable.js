@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import {
   useTable,
   usePagination,
@@ -18,8 +18,8 @@ import {
   TableContainer,
   Button,
   Box,
-  ListItem,
-  ListItemText,
+  Grid,
+  Chip,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -75,7 +75,8 @@ const MaterialTable = ({
   };
 
   const handleDelete = (row) => {
-    console.log(row);
+    const remove_data = data.filter((el) => el.id !== row.original.id);
+    setData([...remove_data]);
   };
 
   return (
@@ -179,7 +180,14 @@ const MaterialTable = ({
                           <Button
                             variant="contained"
                             color="error"
-                            onClick={() => handleDelete(row)}
+                            onClick={() => {
+                              if (
+                                window.confirm(
+                                  `Delete ${row.values.first_name} ${row.values.last_name}?`
+                                )
+                              )
+                                return handleDelete(row);
+                            }}
                             startIcon={<DeleteIcon />}
                           >
                             Delete
@@ -195,18 +203,23 @@ const MaterialTable = ({
                     } else if (cell.column.Header === 'Desired Car(s)') {
                       const cars = row.values.cars;
                       return (
-                        <TableCell {...cell.getCellProps()}>
-                          {cars.map((el, index) => {
-                            return (
-                              <ListItem
-                                key={index}
-                                component="div"
-                                disablePadding
-                              >
-                                <ListItemText key={index} primary={el} />
-                              </ListItem>
-                            );
-                          })}
+                        <TableCell
+                          {...cell.getCellProps()}
+                          sx={{ maxWidth: 100 }}
+                        >
+                          <Grid container wrap="wrap" spacing={1}>
+                            {cars.map((el, index) => {
+                              return (
+                                <Grid item key={index}>
+                                  <Chip
+                                    label={el}
+                                    color="info"
+                                    variant="outlined"
+                                  />
+                                </Grid>
+                              );
+                            })}
+                          </Grid>
                         </TableCell>
                       );
                     }

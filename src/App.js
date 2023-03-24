@@ -1,11 +1,10 @@
-import React, { Fragment, useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import MaterialTable from './components/MaterialTable';
 import ModalForm from './components/ModalForm';
 
 import { Button } from '@mui/material';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import DATA from './MOCK_DATA.json';
-import CARS from './CARS_MOCK_DATA.json';
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -37,7 +36,7 @@ const App = () => {
       cars: [],
       id: '',
     });
-    setCars(['']);
+    setCars([]);
     setOpen(true);
   };
 
@@ -93,7 +92,8 @@ const App = () => {
         setForm={setForm}
         form={form}
         cars={cars}
-        setCars={setCars}
+        data={data}
+        setData={setData}
       />
 
       <MaterialTable

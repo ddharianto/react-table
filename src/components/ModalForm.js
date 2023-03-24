@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React from 'react';
 import Input from './Input';
 import {
   Button,
@@ -16,12 +16,27 @@ import {
 } from '@mui/material';
 import COLOR from '../COLOR_MOCK_DATA.json';
 import CARS from '../CARS_MOCK_DATA.json';
+import AVATAR from '../AVATAR_MOCK_DATA.json';
 
-const ModalForm = ({ open, setOpen, isEdit, setForm, form, cars, setCars }) => {
-  let arr = [];
+const ModalForm = ({
+  open,
+  setOpen,
+  isEdit,
+  setForm,
+  form,
+  cars,
+  data,
+  setData,
+}) => {
+  let cars_arr = [];
   CARS.map((el) => {
-    return cars !== arr ? arr.push(cars.includes(el.name)) : false;
+    return cars !== cars_arr ? cars_arr.push(cars.includes(el.name)) : false;
   });
+
+  let avatar = [];
+  for (let i = 0; i < AVATAR.length; i++) {
+    avatar.push(AVATAR[i].avatar);
+  }
 
   const handleClose = () => {
     setOpen(false);
@@ -38,20 +53,48 @@ const ModalForm = ({ open, setOpen, isEdit, setForm, form, cars, setCars }) => {
       });
     } else {
       const remove_car = form.cars.filter((el) => el !== e.target.value);
-      setForm({
-        ...form,
-        [e.target.name]:
-          e.target.name === 'cars' ? [...remove_car] : e.target.value,
-      });
+      isEdit
+        ? setForm({
+            ...form,
+            [e.target.name]:
+              e.target.name === 'cars' ? [...remove_car] : e.target.value,
+          })
+        : setForm({
+            ...form,
+            [e.target.name]:
+              e.target.name === 'cars' ? [...remove_car] : e.target.value,
+            avatar: avatar[Math.floor(Math.random() * 12)],
+            id: data[data.length - 1].id + 1,
+          });
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (form.cars.length === 0) {
-      alert('Fill all the required input!');
+      alert('Fill all the required form!');
+    } else if (isEdit) {
+      setOpen(false);
+      const update_data = data.map((el) => {
+        return el.id === form.id
+          ? {
+              ...el,
+              first_name: form.first_name,
+              last_name: form.last_name,
+              email: form.email,
+              color: form.color,
+              cars: form.cars,
+            }
+          : el;
+      });
+      setData(update_data);
+
+      alert('Data has been successfully edited!');
+    } else {
+      setOpen(false);
+      setData([...data, form]);
+      alert('Data has been successfully added!');
     }
-    console.log(form);
   };
 
   return (
@@ -121,7 +164,7 @@ const ModalForm = ({ open, setOpen, isEdit, setForm, form, cars, setCars }) => {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <FormLabel required>{`Desired Car(s): `}</FormLabel>
+              <FormLabel required>{`Desired Car(s)`}</FormLabel>
               <FormGroup row={true}>
                 {CARS.map((el, index) => {
                   return (
@@ -131,7 +174,7 @@ const ModalForm = ({ open, setOpen, isEdit, setForm, form, cars, setCars }) => {
                         <Checkbox
                           name="cars"
                           onChange={handleChange}
-                          defaultChecked={arr[index]}
+                          defaultChecked={cars_arr[index]}
                           value={el.name}
                         />
                       }
