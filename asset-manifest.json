@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/react-table/static/css/main.e6c13ad2.css",
-    "main.js": "/react-table/static/js/main.82b8e98e.js",
+    "main.js": "/react-table/static/js/main.b2535127.js",
     "static/js/498.08e1e2c8.chunk.js": "/react-table/static/js/498.08e1e2c8.chunk.js",
     "static/js/703.041860bd.chunk.js": "/react-table/static/js/703.041860bd.chunk.js",
     "static/js/261.a7b2ba26.chunk.js": "/react-table/static/js/261.a7b2ba26.chunk.js",
     "static/js/787.c4e7f8f9.chunk.js": "/react-table/static/js/787.c4e7f8f9.chunk.js",
     "index.html": "/react-table/index.html",
     "main.e6c13ad2.css.map": "/react-table/static/css/main.e6c13ad2.css.map",
-    "main.82b8e98e.js.map": "/react-table/static/js/main.82b8e98e.js.map",
+    "main.b2535127.js.map": "/react-table/static/js/main.b2535127.js.map",
     "498.08e1e2c8.chunk.js.map": "/react-table/static/js/498.08e1e2c8.chunk.js.map",
     "703.041860bd.chunk.js.map": "/react-table/static/js/703.041860bd.chunk.js.map",
     "261.a7b2ba26.chunk.js.map": "/react-table/static/js/261.a7b2ba26.chunk.js.map",
@@ -16,6 +16,6 @@
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.82b8e98e.js"
+    "static/js/main.b2535127.js"
   ]
 }
