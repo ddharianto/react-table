@@ -1,8 +1,16 @@
 import React from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { Button, Stack, Typography, SvgIcon, Divider } from '@mui/material';
+import {
+  Button,
+  Stack,
+  Typography,
+  SvgIcon,
+  Divider,
+  Link,
+} from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 const ExportButton = ({ data, columns }) => {
   const handleDownloadJSON = () => {
@@ -61,6 +69,20 @@ const ExportButton = ({ data, columns }) => {
         }
       >
         PDF
+      </Button>
+      <Typography variant="subtitle1"> or see </Typography>
+      <Button
+        color="inherit"
+        href="https://github.com/ddharianto/react-table"
+        target="_blank"
+        rel="noopener"
+        startIcon={
+          <SvgIcon fontSize="small">
+            <GitHubIcon />
+          </SvgIcon>
+        }
+      >
+        Source code
       </Button>
     </Stack>
   );
