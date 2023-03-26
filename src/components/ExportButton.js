@@ -27,7 +27,7 @@ const ExportButton = ({ data, columns }) => {
     doc.autoTable({
       startY: finalY + 20,
       theme: 'striped',
-      columns: pdf_columns.map((col) => ({
+      columns: pdf_columns.map((col, index) => ({
         header: col.Header,
         dataKey: col.accessor,
       })),
