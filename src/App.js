@@ -1,8 +1,17 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import MaterialTable from './components/MaterialTable';
 import ModalForm from './components/ModalForm';
-
-import { Button } from '@mui/material';
+import ExportButton from './components/ExportButton';
+import {
+  Button,
+  Stack,
+  Box,
+  Typography,
+  Container,
+  SvgIcon,
+  useMediaQuery,
+} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import DATA from './MOCK_DATA.json';
 
@@ -20,6 +29,8 @@ const App = () => {
     cars: [],
     id: '',
   });
+  const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     setData(DATA);
@@ -45,6 +56,7 @@ const App = () => {
       {
         Header: 'Avatar',
         accessor: 'avatar',
+        maxWidth: 70,
       },
       {
         Header: 'First Name',
@@ -61,6 +73,7 @@ const App = () => {
       {
         Header: 'Favourite Color',
         accessor: 'color',
+        maxWidth: 70,
       },
       {
         Header: 'Desired Car(s)',
@@ -75,37 +88,65 @@ const App = () => {
   );
 
   return (
-    <div>
-      <h1>React Table Example</h1>
-      <Button
-        variant="contained"
-        startIcon={<LibraryAddIcon />}
-        sx={{ my: 1 }}
-        onClick={handleClick}
-      >
-        Add New Data
-      </Button>
-      <ModalForm
-        open={open}
-        setOpen={setOpen}
-        isEdit={isEdit}
-        setForm={setForm}
-        form={form}
-        cars={cars}
-        data={data}
-        setData={setData}
-      />
+    <Box
+      component="main"
+      sx={{
+        flexGrow: 1,
+        py: 8,
+      }}
+    >
+      <Container maxWidth="xl">
+        <Stack spacing={3}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            spacing={smDown ? 1 : 12}
+          >
+            <Stack spacing={1}>
+              <Typography variant="h3" sx={{ minWidth: 270 }}>
+                React Table
+              </Typography>
+              <ExportButton data={data} columns={columns} />
+            </Stack>
+            <div>
+              <Button
+                onClick={handleClick}
+                size={'medium'}
+                startIcon={
+                  <SvgIcon fontSize="small">
+                    <LibraryAddIcon />
+                  </SvgIcon>
+                }
+                variant="contained"
+                sx={{ minWidth: 150, height: '50%' }}
+              >
+                Add New Data
+              </Button>
+            </div>
+          </Stack>
+          <ModalForm
+            open={open}
+            setOpen={setOpen}
+            isEdit={isEdit}
+            setForm={setForm}
+            form={form}
+            cars={cars}
+            data={data}
+            setData={setData}
+          />
 
-      <MaterialTable
-        columns={columns}
-        data={data}
-        setData={setData}
-        setOpen={setOpen}
-        setForm={setForm}
-        setCars={setCars}
-        setIsEdit={setIsEdit}
-      />
-    </div>
+          <MaterialTable
+            columns={columns}
+            data={data}
+            setData={setData}
+            setOpen={setOpen}
+            setForm={setForm}
+            setCars={setCars}
+            setIsEdit={setIsEdit}
+          />
+        </Stack>
+      </Container>
+    </Box>
   );
 };
 

@@ -95,7 +95,11 @@ const MaterialTable = ({
             {headerGroups.map((headerGroup) => (
               <TableRow {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => {
-                  if (column.canSort) {
+                  if (
+                    column.canSort &&
+                    column.id !== 'actions' &&
+                    column.id !== 'avatar'
+                  ) {
                     return (
                       <TableCell
                         {...column.getHeaderProps(
@@ -167,13 +171,16 @@ const MaterialTable = ({
                   {row.cells.map((cell) => {
                     if (cell.column.Header === 'Actions') {
                       return (
-                        <TableCell {...cell.getCellProps()}>
+                        <TableCell
+                          {...cell.getCellProps()}
+                          sx={{ maxWidth: 200 }}
+                        >
                           <Button
                             variant="contained"
                             color="primary"
                             onClick={() => handleEdit(row)}
                             startIcon={<BorderColorIcon />}
-                            sx={{ mr: 1 }}
+                            sx={{ m: 0.5 }}
                           >
                             Edit
                           </Button>
@@ -189,6 +196,7 @@ const MaterialTable = ({
                                 return handleDelete(row);
                             }}
                             startIcon={<DeleteIcon />}
+                            sx={{ m: 0.5 }}
                           >
                             Delete
                           </Button>
@@ -196,7 +204,10 @@ const MaterialTable = ({
                       );
                     } else if (cell.column.Header === 'Avatar') {
                       return (
-                        <TableCell {...cell.getCellProps()}>
+                        <TableCell
+                          {...cell.getCellProps()}
+                          sx={{ maxWidth: 50 }}
+                        >
                           <img src={row.values.avatar} alt="avatar" />
                         </TableCell>
                       );
@@ -205,7 +216,7 @@ const MaterialTable = ({
                       return (
                         <TableCell
                           {...cell.getCellProps()}
-                          sx={{ maxWidth: 100 }}
+                          sx={{ maxWidth: 200 }}
                         >
                           <Grid container wrap="wrap" spacing={1}>
                             {cars.map((el, index) => {
@@ -220,6 +231,15 @@ const MaterialTable = ({
                               );
                             })}
                           </Grid>
+                        </TableCell>
+                      );
+                    } else if (cell.column.Header === 'Favourite Color') {
+                      return (
+                        <TableCell
+                          {...cell.getCellProps()}
+                          sx={{ maxWidth: 50 }}
+                        >
+                          {cell.render('Cell')}
                         </TableCell>
                       );
                     }
