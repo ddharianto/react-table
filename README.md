@@ -1,3 +1,38 @@
+# React-Table with Material UI
+
+This is an example how to create a table using React-Table v7 and styled with Material UI v5
+
+## Some features on it
+
+### Table features
+
+- Display the data dynamically 
+- Sorting system on selected columns/headers
+- Search data
+- Pagination
+- Basic CRUD functionality 
+
+### CRUD features
+
+- Adding new data 
+- Edit existing data
+- Delete existing data
+
+### Others
+
+- Export the existing data to a JSON or PDF file
+
+## How to setup
+
+- Clone or download this repo
+- You can replace the mock data with your own data (in this example I use JSON mock data from [Mockaroo](https://www.mockaroo.com/))
+- install deps with `npm install` or `yarn`
+- `npm run start`
+
+## Demo
+
+https://ddharianto.github.io/react-table/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
