@@ -98,7 +98,8 @@ const MaterialTable = ({
                   if (
                     column.canSort &&
                     column.id !== 'actions' &&
-                    column.id !== 'avatar'
+                    column.id !== 'avatar' &&
+                    column.id !== 'cars'
                   ) {
                     return (
                       <TableCell
