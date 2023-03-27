@@ -33,6 +33,9 @@ This is an example how to create a table using React-Table v7 and styled with Ma
 
 https://ddharianto.github.io/react-table/
 
+#
+#
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
